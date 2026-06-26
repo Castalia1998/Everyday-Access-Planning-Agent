@@ -1,0 +1,158 @@
+﻿"""Registered deterministic planning tool metadata."""
+
+from __future__ import annotations
+
+from src.tool_registry.schemas import ToolSpec
+
+TOOL_SPECS: dict[str, ToolSpec] = {
+    "urban_data.load_station_area_indicators": ToolSpec(
+        name="urban_data.load_station_area_indicators",
+        description="Load synthetic station-area indicator data from a CSV file.",
+        category="urban_data",
+        input_schema={"type": "object", "properties": {"path": {"type": "string"}}, "required": ["path"]},
+        output_schema={"type": "dataframe", "description": "Station-area indicator table."},
+        read_only=True,
+        risk_level="low",
+    ),
+    "urban_analysis.calculate_everyday_access_deficit": ToolSpec(
+        name="urban_analysis.calculate_everyday_access_deficit",
+        description="Calculate everyday access deficit from access indicators.",
+        category="urban_analysis",
+        input_schema={"type": "object", "properties": {"df": {"type": "dataframe"}}, "required": ["df"]},
+        output_schema={"type": "dataframe", "description": "Input rows with everyday_access_deficit."},
+        read_only=True,
+        risk_level="low",
+    ),
+    "urban_analysis.calculate_public_realm_deficit": ToolSpec(
+        name="urban_analysis.calculate_public_realm_deficit",
+        description="Calculate public realm deficit from street and public-space indicators.",
+        category="urban_analysis",
+        input_schema={"type": "object", "properties": {"df": {"type": "dataframe"}}, "required": ["df"]},
+        output_schema={"type": "dataframe", "description": "Input rows with public_realm_deficit."},
+        read_only=True,
+        risk_level="low",
+    ),
+    "urban_analysis.calculate_community_need": ToolSpec(
+        name="urban_analysis.calculate_community_need",
+        description="Calculate normalized community need from demographic and density indicators.",
+        category="urban_analysis",
+        input_schema={"type": "object", "properties": {"df": {"type": "dataframe"}}, "required": ["df"]},
+        output_schema={"type": "dataframe", "description": "Input rows with community_need."},
+        read_only=True,
+        risk_level="low",
+    ),
+    "urban_analysis.calculate_planning_priority": ToolSpec(
+        name="urban_analysis.calculate_planning_priority",
+        description="Calculate planning priority using access, public realm, community need, and optional concern scores.",
+        category="urban_analysis",
+        input_schema={
+            "type": "object",
+            "properties": {"df": {"type": "dataframe"}, "citizen_concern_df": {"type": "dataframe", "nullable": True}},
+            "required": ["df"],
+        },
+        output_schema={"type": "dataframe", "description": "Input rows with planning_priority."},
+        read_only=True,
+        risk_level="low",
+    ),
+    "urban_analysis.rank_priority_areas": ToolSpec(
+        name="urban_analysis.rank_priority_areas",
+        description="Rank station areas by planning priority and return the top rows.",
+        category="urban_analysis",
+        input_schema={
+            "type": "object",
+            "properties": {"df": {"type": "dataframe"}, "top_k": {"type": "integer", "default": 5}},
+            "required": ["df"],
+        },
+        output_schema={"type": "dataframe", "description": "Top-k ranked station areas."},
+        read_only=True,
+        risk_level="low",
+    ),
+    "urban_policy.retrieve_policy_snippets": ToolSpec(
+        name="urban_policy.retrieve_policy_snippets",
+        description="Retrieve policy-style text snippets with deterministic keyword overlap.",
+        category="urban_policy",
+        input_schema={
+            "type": "object",
+            "properties": {"query": {"type": "string"}, "docs_dir": {"type": "string"}, "top_k": {"type": "integer", "default": 3}},
+            "required": ["query", "docs_dir"],
+        },
+        output_schema={"type": "array", "items": {"type": "object"}},
+        read_only=True,
+        risk_level="low",
+    ),
+    "urban_feedback.summarize_citizen_feedback": ToolSpec(
+        name="urban_feedback.summarize_citizen_feedback",
+        description="Summarize synthetic citizen feedback overall or for one station area.",
+        category="urban_feedback",
+        input_schema={
+            "type": "object",
+            "properties": {"feedback_df": {"type": "dataframe"}, "station_area": {"type": "string", "nullable": True}},
+            "required": ["feedback_df"],
+        },
+        output_schema={"type": "object", "description": "Feedback counts, topics, sentiment, and examples."},
+        read_only=True,
+        risk_level="low",
+    ),
+    "urban_scenario.simulate_intervention": ToolSpec(
+        name="urban_scenario.simulate_intervention",
+        description="Simulate a simple intervention and recalculate priority scores.",
+        category="urban_scenario",
+        input_schema={
+            "type": "object",
+            "properties": {
+                "df": {"type": "dataframe"},
+                "intervention_type": {"type": "string"},
+                "target_areas": {"type": "array", "items": {"type": "string"}},
+            },
+            "required": ["df", "intervention_type", "target_areas"],
+        },
+        output_schema={"type": "dataframe", "description": "Scenario-adjusted table."},
+        read_only=True,
+        risk_level="low",
+    ),
+    "urban_brief.generate_stakeholder_brief": ToolSpec(
+        name="urban_brief.generate_stakeholder_brief",
+        description="Generate a deterministic stakeholder-specific planning brief.",
+        category="urban_brief",
+        input_schema={
+            "type": "object",
+            "properties": {
+                "analysis_result": {"type": "dataframe"},
+                "stakeholder_type": {"type": "string"},
+                "policy_snippets": {"type": "array", "nullable": True},
+                "feedback_summary": {"type": "object", "nullable": True},
+            },
+            "required": ["analysis_result", "stakeholder_type"],
+        },
+        output_schema={"type": "string", "description": "Planning brief text."},
+        read_only=True,
+        risk_level="low",
+    ),
+    "urban_eval.evaluate_brief": ToolSpec(
+        name="urban_eval.evaluate_brief",
+        description="Evaluate a planning brief for basic grounding and limitation checks.",
+        category="urban_eval",
+        input_schema={"type": "object", "properties": {"brief_text": {"type": "string"}}, "required": ["brief_text"]},
+        output_schema={"type": "object", "description": "Evaluation checks, pass flag, and score."},
+        read_only=True,
+        risk_level="low",
+    ),
+    "urban_trace.write_trace": ToolSpec(
+        name="urban_trace.write_trace",
+        description="Append a trace event to a JSON trace file.",
+        category="urban_trace",
+        input_schema={
+            "type": "object",
+            "properties": {
+                "trace_path": {"type": "string"},
+                "step_name": {"type": "string"},
+                "inputs": {"type": "object"},
+                "outputs": {"type": "object"},
+            },
+            "required": ["trace_path", "step_name", "inputs", "outputs"],
+        },
+        output_schema={"type": "null", "description": "Writes a trace event to disk."},
+        read_only=False,
+        risk_level="medium",
+    ),
+}

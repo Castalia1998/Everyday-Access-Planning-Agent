@@ -1,0 +1,11 @@
+station_area,planning_region,population_density,elderly_share,children_share,low_income_share,rental_housing_share,transit_access,hawker_access,grocery_access,clinic_access,park_access,community_center_access,sidewalk_quality,crossing_safety,shade_quality,seating_availability,street_greenery,barrier_free_access
+Tampines,East,0.72,0.18,0.16,0.20,0.22,0.90,0.82,0.78,0.74,0.70,0.76,0.72,0.66,0.58,0.54,0.62,0.70
+Toa Payoh,Central,0.86,0.24,0.12,0.18,0.28,0.88,0.86,0.82,0.80,0.60,0.84,0.68,0.60,0.52,0.50,0.56,0.74
+Jurong East,West,0.78,0.15,0.17,0.19,0.18,0.92,0.76,0.74,0.70,0.55,0.68,0.64,0.58,0.48,0.45,0.50,0.66
+Woodlands,North,0.62,0.14,0.20,0.21,0.24,0.80,0.70,0.68,0.64,0.72,0.66,0.60,0.56,0.46,0.44,0.54,0.62
+Bedok,East,0.74,0.21,0.14,0.17,0.20,0.84,0.88,0.80,0.72,0.76,0.70,0.70,0.64,0.60,0.56,0.66,0.68
+Yishun,North,0.70,0.17,0.18,0.23,0.26,0.78,0.72,0.70,0.66,0.62,0.64,0.58,0.52,0.44,0.42,0.48,0.58
+Clementi,West,0.69,0.19,0.15,0.16,0.15,0.86,0.80,0.76,0.78,0.68,0.72,0.74,0.68,0.62,0.58,0.64,0.72
+Punggol,North-East,0.66,0.10,0.24,0.18,0.17,0.82,0.66,0.64,0.58,0.74,0.60,0.62,0.54,0.50,0.48,0.58,0.60
+Bishan,Central,0.71,0.20,0.13,0.14,0.12,0.89,0.78,0.74,0.76,0.82,0.74,0.76,0.70,0.64,0.62,0.70,0.76
+Bukit Batok,West,0.67,0.16,0.18,0.22,0.25,0.76,0.68,0.66,0.62,0.64,0.58,0.56,0.50,0.42,0.40,0.46,0.56
